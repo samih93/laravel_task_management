@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -13,20 +15,16 @@ class TaskController extends Controller
         return response()->json($tasks, 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:40'], // Each rule is a separate array element
-            'description' => ['nullable', 'string'],
-            'priority' => ['required', 'integer', 'between:1,5'],
-        ]);
-        $task =  Task::create($validatedData);
+
+        $task =  Task::create($request->validated());
         return response()->json($task, 201);
     }
 
 
 
-    public function update(Request $request, $id)
+    public function update(UpdateTaskRequest $request, $id)
     {
 
 
@@ -35,7 +33,11 @@ class TaskController extends Controller
             return response()->json(['error' => 'Task not found'], 404);
         }
 
-        $data = $request->only('title'); // Check this to ensure you get the right keys/values
+        // Use validated data
+        $data = array_intersect_key(
+            $request->validated(),
+
+        );
         $task->update($data);
 
         return response()->json($task, 200);
