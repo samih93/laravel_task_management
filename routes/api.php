@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,3 +17,7 @@ Route::get('/user', function (Request $request) {
 // Route::delete('tasks/{id}', [TaskController::class, 'destroy']);
 
 Route::apiResource('tasks', TaskController::class);
+
+
+
+Route::post('profile', ProfileController::class, 'store');
