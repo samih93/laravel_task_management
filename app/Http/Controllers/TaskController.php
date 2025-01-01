@@ -46,12 +46,10 @@ class TaskController extends Controller
     {
 
 
-        $task = Task::find($id);
+        $task = Task::with('user')->find($id);
         if (!$task) {
-            return response()->json(['error' => 'Task not found'], 200);
+            return response()->json(['error' => 'Task not found'], 404);
         }
-
-
 
         return response()->json($task, 200);
     }

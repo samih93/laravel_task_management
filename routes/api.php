@@ -25,3 +25,4 @@ Route::post('profile', [ProfileController::class, 'store']);
 Route::get('profile/{id}', [ProfileController::class, 'show']);
 
 Route::get('user/{id}/profile', [UserController::class, 'getProfile']);
+Route::get('user/{id}/tasks', [UserController::class, 'getUserTasks']);
