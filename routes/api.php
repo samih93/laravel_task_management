@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -26,3 +27,8 @@ Route::get('profile/{id}', [ProfileController::class, 'show']);
 
 Route::get('user/{id}/profile', [UserController::class, 'getProfile']);
 Route::get('user/{id}/tasks', [UserController::class, 'getUserTasks']);
+
+
+Route::post('tasks/{taskId}/categories', [TaskController::class, 'addCateogoriesToTask']);
+Route::get('tasks/{taskId}/categories', [TaskController::class, 'getTaskCategories']);
+Route::get('categories/{categoryId}/tasks', [CategoryController::class, 'getCategoryTasks']);
