@@ -21,6 +21,10 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('tasks', TaskController::class);
 
 
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+
 
 Route::post('profile', [ProfileController::class, 'store']);
 Route::get('profile/{id}', [ProfileController::class, 'show']);
