@@ -18,4 +18,8 @@ class UserController extends Controller
         $user =   User::find($id)->tasks;
         return response()->json($user, 200);
     }
+
+    public function register() {}
+    public function login() {}
+    public function logout() {}
 }
