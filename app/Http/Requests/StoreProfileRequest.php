@@ -22,7 +22,7 @@ class StoreProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'exists:users,id'], // Each rule is a separate array element
+            // 'user_id' => ['required', 'exists:users,id'], // Each rule is a separate array element
             'phone' => ['string', 'max:15'],
             'address' => ['nullable', 'string', 'max:1000'],
             'date_of_birth' => ['nullable', 'date'],

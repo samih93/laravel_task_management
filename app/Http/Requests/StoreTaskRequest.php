@@ -24,8 +24,8 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:40'], // Each rule is a separate array element
             'description' => ['nullable', 'string'],
-            'priority' => ['required', 'integer', 'between:1,5'],
-            'user_id' => 'required|exists:users,id'
+            'priority' => ['required', 'in:high,medium,low'],
+            //'user_id' => 'required|exists:users,id'
         ];
     }
 
