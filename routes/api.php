@@ -8,9 +8,6 @@ use App\Http\Middleware\CheckUserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
@@ -35,8 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [ProfileController::class, 'show']);
     });
 
+    Route::get('user', [UserController::class, 'fetchCurrentUser']);
     Route::get('user/{id}/profile', [UserController::class, 'getProfile']);
-
     Route::get('user/{id}/tasks', [UserController::class, 'getUserTasks']);
 
     Route::apiResource('tasks', TaskController::class);

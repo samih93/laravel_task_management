@@ -29,6 +29,36 @@ class ProfileController extends Controller
 
         $validateData = $request->validated();
         $validateData["user_id"] = $user_id;
+        // Check if the profile already exists for the user
+        $profile = Profile::where('user_id', $user_id)->first();
+
+        if ($profile) {
+            // If an old image exists, delete it
+            if ($profile->image) {
+                // Correct path to check if file exists
+                $oldImagePath = public_path('storage/' . $profile->image); // Path in the public directory
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath); // Delete the old image
+                }
+            }
+
+            // Update the profile with new image if provided
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('my photo', 'public');
+                $validateData['image'] = $path;
+            }
+
+            // Update the profile with the new data
+            $profile->update($validateData);
+
+            return response()->json(['message' => 'Profile updated successfully', 'profile' => $profile]);
+        } else {
+            // If profile does not exist, create a new one
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('my photo', 'public');
+                $validateData['image'] = $path;
+            }
+        }
         $profile =  Profile::create($validateData);
         return response()->json(['message' => 'profile created succeffully', 'profile' => $profile]);
     }
